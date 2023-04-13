@@ -27,6 +27,7 @@ cd Desktop
 5. Install the required Python library by typing the following commands one by one and press Enter after each command:
 
 pip install requests
+
 pip install beautifulsoup4
 
 This will install the necessary Python libraries for the web scraper.
