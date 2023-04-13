@@ -110,7 +110,7 @@ if __name__ == "__main__":
     "St. Mary's University",
     "St. Thomas More College",
     "St. Thomas University",
-    "Télé-université (TÉLUQ)",
+    "Télé-université",
     "Thompson Rivers University",
     "Trent University",
     "Trinity Western University",
@@ -156,60 +156,40 @@ if __name__ == "__main__":
 # canadian funding agencies 
 
     "Canadian Institutes of Health Research",
-    "CIHR",
     "Natural Sciences and Engineering Research Council",
-    "NSERC",
     "Social Sciences and Humanities Research Council",
-    "SSHRC",
     "Canada Foundation for Innovation",
-    "CFI",
     "Genome Canada",
     "Canada Research Chairs",
-    "CRC",
     "Ontario Graduate Scholarship",
-    "OGS",
     "Ontario Trillium Scholarship",
-    "OTS",
     "Vanier Canada Graduate Scholarships",
     "Banting Postdoctoral Fellowships",
     "Canada Excellence Research Chairs",
-    "CERC",
     "Canada First Research Excellence Fund",
-    "CFREF",
     "Networks of Centres of Excellence",
-    "NCE",
     "Canadian Space Agency",
-    "CSA",
     "National Research Council Canada",
-    "NRC",
     "Canadian Cancer Society",
     "Canadian Diabetes Association",
     "Canadian Heart and Stroke Foundation",
     "Innovation, Science and Economic Development Canada",
-    "ISED",
     "Mitacs",
-    "Fonds de recherche du Québec - Nature et technologies (FRQNT)",
-    "Fonds de recherche du Québec - Santé (FRQS)",
-    "Fonds de recherche du Québec - Société et culture (FRQSC)",
+    "Fonds de recherche du Québec",
     "Michael Smith Foundation for Health Research",
-    "MSFHR",
     "New Brunswick Health Research Foundation",
-    "NBHRF",
     "Nova Scotia Health Research Foundation",
-    "NSHRF",
     "Saskatchewan Health Research Foundation",
-    "SHRF",
     "Alberta Innovates",
     "Research Manitoba",
     "Ontario Research Fund",
-    "ORF",
 
 ]
 
     queries = [f"({term}) (alphafold OR alphafold2)" for term in canadian_terms]
 
     start_page = 1
-    num_pages = 100
+    num_pages = 20
 
     all_results = get_google_scholar_results(queries, start_page, num_pages)
 
