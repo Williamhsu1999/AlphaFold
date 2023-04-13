@@ -1,6 +1,6 @@
 # Alphafold Impact Assessment in Canada
 
-This repository contains the code to scrape and analyze the impact of Alphafold in Canada. Follow the instructions below to set up the environment and run the code.
+This repository contains the code to scrape and analyze the impact of Alphafold in Canada. Follow the instructions below to set up the environment and run the code. You can change the number of pages fetch or changes the term of you are interested in searching in the code. 
 
 ## Prerequisites
 
