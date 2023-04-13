@@ -30,7 +30,6 @@ pip install requests
 
 pip install beautifulsoup4
 
-This will install the necessary Python libraries for the web scraper.
 
 ## Running the Scraper
 
