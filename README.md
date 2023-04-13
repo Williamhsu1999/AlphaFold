@@ -8,65 +8,52 @@ This repository contains the code to scrape and analyze the impact of Alphafold 
 
 ## Setting up the Environment
 
-1. Download the necessary files from the repository:
+1. Download the necessary file from the repository:
 
-   - [scraper.py](https://raw.githubusercontent.com/Williamhsu1999/AlphaFold/main/beautifulsoup/Canadianterm/scraper.py)
-   - [convert_to_csv.py](https://raw.githubusercontent.com/Williamhsu1999/AlphaFold/main/beautifulsoup/Canadianterm/convert_to_csv.py)
-   - [requirements.txt](https://raw.githubusercontent.com/Williamhsu1999/AlphaFold/main/beautifulsoup/Canadianterm/requirements.txt)
+   - [Canadianterm.py](https://raw.githubusercontent.com/Williamhsu1999/AlphaFold/main/Beautifulsoup/Canadianterm.py)
 
-   Right-click on each link and choose "Save link as..." to save the files to your local machine.
+   Right-click on the link and choose "Save link as..." to save the file to your Desktop. Make sure is saved as a python file. 
 
-2. Create a new folder on your local machine (e.g., `alphafold`) and move the downloaded files into this folder.
+2. Open the command prompt or terminal.
 
-3. Open the command prompt or terminal and navigate to the new folder:
+3. If your command prompt or terminal is not already in your user directory, navigate to it using the following command:
 
-cd path/to/alphafold
+cd %userprofile%
 
+4. Navigate to the Desktop where u installed the file:
 
-Replace `path/to/alphafold` with the actual path to the folder you created.
+cd Desktop
 
-4. Install the required Python libraries:
+5. Install the required Python library by typing the following commands one by one and press Enter after each command:
 
-pip install -r requirements.txt
+pip install requests
+pip install beautifulsoup4
 
+This will install the necessary Python libraries for the web scraper.
 
 ## Running the Scraper
 
 1. Open the command prompt or terminal.
-2. Navigate to the folder containing the scraper script:
+2. Navigate to the Desktop:
 
-cd path/to/alphafold
+cd %userprofile%/Desktop
 
+3. Run the web scraper by typing the following command and pressing Enter:
 
-Replace `path/to/alphafold` with the actual path to the folder you created.
-
-3. Run the scraper script:
-
-python scraper.py
+cd Desktop/Canadianterm
+python Canadianterm.py
 
 
-This script will scrape the relevant data and save it in a text file (e.g., `scraped_data.txt`).
+This script will start fetching the first 100 pages of search results for articles that contain both "Alphafold" or "Alphafold2" and at least one Canadian term. If an article has 2 or more Canadian terms, it will still be scraped as long as it meets the condition of having at least one Canadian term and either "Alphafold" or "Alphafold2". The scraper will check if any of the Canadian terms appear in the article's text, and if it finds a match, the article will be considered relevant and added to the scraped data.
 
-## Converting the Scraped Data to CSV
-
-1. Open the command prompt or terminal.
-2. Navigate to the folder containing the conversion script:
-
-cd path/to/alphafold
-
-
-Replace `path/to/alphafold` with the actual path to the folder you created.
-
-3. Run the conversion script:
-
-python convert_to_csv.py
-
-
-This script will parse the text file containing the scraped data and save it as a CSV file (e.g., `scraped_data.csv`).
+Note: It is essential to remember that web scraping might be against the terms of service for some websites, and Google Scholar may temporarily block your IP address if you make too many requests. It is recommended to use APIs whenever possible and always be respectful of the website's terms of service and rate limits.
 
 ## Analyzing the Data
 
-You can now import the generated CSV file into a data analysis tool or programming language like Python, R, or Excel for further analysis and visualization.
+You can now import the generated text file into a data analysis tool or programming language like Python, R, or Excel for further analysis and visualization.
+
+
+
 
 
 
