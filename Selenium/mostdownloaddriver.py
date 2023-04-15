@@ -1,48 +1,14 @@
-import requests
-from bs4 import BeautifulSoup
-import time
-import datetime
+import csv
+from time import sleep
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
 
-def get_google_scholar_results(queries, start_page, num_pages):
-    base_url = "https://scholar.google.com/scholar"
-    all_results = []
-    unique_titles = set()
+# Define the search term
+search_term = 'alphafold OR alphafold2'
 
-    for query in queries:
-        for i in range(start_page, start_page + num_pages):
-            params = {
-                "q": query,
-                "start": (i - 1) * 10
-            }
-            response = requests.get(base_url, params=params)
-            soup = BeautifulSoup(response.text, "html.parser")
-            search_results = soup.find_all("div", class_="gs_ri")
-
-            for result in search_results:
-                title = result.find("h3", class_="gs_rt").text
-
-                if title not in unique_titles:
-                    unique_titles.add(title)
-
-                    author_info = result.find("div", class_="gs_a").text
-                    snippet = result.find("div", class_="gs_rs").text
-
-                    all_results.append({
-                        "title": title,
-                        "author_info": author_info,
-                        "snippet": snippet
-                    })
-
-            print(f"Fetching page {i} for query '{query}'...")
-            time.sleep(1)
-
-    return all_results
-
-if __name__ == "__main__":
-    canadian_terms = [
- 
-
-    #uni list 
+# Define a list of Canadian universities
+universities = [
     "Acadia University",
     "Algoma University",
     "Athabasca University",
@@ -138,19 +104,62 @@ if __name__ == "__main__":
     "University of Winnipeg",
     "Vancouver Island University",
     "Wilfrid Laurier University",
-    
+  
 ]
 
-    queries = [f"({term}) (alphafold OR alphafold2)" for term in canadian_terms]
+# Initialize the articles list
+articles = []
 
-    start_page = 1
-    num_pages = 50
+# Set up the Selenium WebDriver (assuming Chrome)
+service = Service(executable_path='C:\\Users\\willi\\Desktop\\chromedriver.exe')
+driver = webdriver.Chrome(service=service)
 
-    all_results = get_google_scholar_results(queries, start_page, num_pages)
+# Scrape data from Google Scholar for each university
+for university_name in universities:
+    query = f'{search_term} "{university_name}"'
+    url = f'https://scholar.google.com/scholar?q={query}'
+    driver.get(url)
+    sleep(2)  # Wait for the page to load
 
-    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open("alphafold_results.txt", "w", encoding="utf-8") as file:
-        file.write(f"Scraped on: {current_time}\n")
-        file.write(f"Found {len(all_results)} articles:\n")
-        for result in all_results:
-            file.write(f"Title: {result['title']}\nAuthor Info: {result['author_info']}\nSnippet: {result['snippet']}\n\n")
+    # Iterate through the top 50 pages
+    for page in range(50):
+        # Extract the article information for the current university and page
+        results = driver.find_elements('css selector', 'div.gs_ri')
+        for result in results:
+            try:
+                title = result.find_element('css selector', 'h3.gs_rt a').text
+                authors_and_info = result.find_element('css selector', 'div.gs_a').text
+                citation_date = authors_and_info.split('-')[-1].strip()
+                authors = authors_and_info.split('-')[0].strip()
+
+                articles.append({
+                    'title': title,
+                    'authors': authors,
+                    'date': citation_date,
+                    'university': university_name
+                })
+            except Exception as e:
+                print(f"Error processing an article: {e}")
+
+        # Go to the next page
+        next_button = driver.find_element_by_link_text('Next')
+        if next_button:
+            next_button.click()
+            sleep(2)  # Wait for the next page to load
+        else:
+            break
+
+driver.quit()
+
+# Write the article data to a CSV file
+with open('articles.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    fieldnames = ['title', 'authors', 'date', 'university']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+    writer.writeheader()
+    for article in articles:
+        writer.writerow(article)
+
+print("Scraping completed. Data has been saved to articles.csv.")
+
+    
